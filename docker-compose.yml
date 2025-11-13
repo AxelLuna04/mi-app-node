@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  app:
+
+    build: .
+    container_name: estudiantes-api
+    ports:
+      - "3001:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/estudiantesdb
+    depends_on:
+      - mongo
+    networks:
+      - estudiantes-net
+  mongo:
+    image: mongo:4.4
+    container_name: estudiantes-db
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - estudiantes-net
+
+volumes:
+  mongodata:
+
+networks:
+  estudiantes-net:
